@@ -3,169 +3,544 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio | Home</title>
-  <script defer src = "script.js"></script>
+  <title>RAM | Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>My Portfolio</h1>
-    <nav>
-      <a href="#" onclick="showSection('home')">Home</a>
-      <a href="#" onclick="showSection('skills')">Skills</a>
-      <a href="#" onclick="showSection('projects')">Projects</a>
-      <a href="#" onclick="showSection('social')">Social</a>
-       <a href="#" onclick="showSection('about')">About</a>
-      <a href="#" onclick="showSection('contact')">Contact</a>      
-    </nav>
-  </header>
 
-  <section id="home" class="active">
-  <div class="bg-gradient"></div>
-  <div class="matrix"></div>
-  <div class="home-content">
-    <div class="intro">
-      <h1>Hello, I'm Ram</h1>
-      <div class="typewriter">
-        <h2 id="hover-text">An Aspiring Software Engineer</h2>
+  <!-- CUSTOM CURSOR -->
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-ring"></div>
+      <div class="loader-text">
+        <span class="load-label">INITIALIZING</span>
+        <div class="load-bar"><div class="load-fill"></div></div>
+        <span class="load-pct" id="load-pct">0%</span>
       </div>
-      <br><br><h3>I am very enthusiastic about learning new technologies solving complex problems, and building user-friendly experiences.</h3>
+    </div>
   </div>
-  <div class="profile-container">
-  <img src="SAI.png" alt="Profile Image" class="profile-img" id="profile-img">
-</div>
-</div>
-</section>
 
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <span class="logo-bracket">[</span>RAM<span class="logo-bracket">]</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home" data-section="home">Home</a></li>
+      <li><a href="#about" data-section="about">About</a></li>
+      <li><a href="#skills" data-section="skills">Skills</a></li>
+      <li><a href="#projects" data-section="projects">Projects</a></li>
+      <li><a href="#experience" data-section="experience">Stats</a></li>
+      <li><a href="#contact" data-section="contact">Contact</a></li>
+    </ul>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      <span>Available for hire</span>
+    </div>
+    <button class="nav-toggle" id="nav-toggle">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="home">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-grid"></div>
+    <div class="mouse-light" id="mouse-light"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Full-Stack Engineer · Open to Opportunities</span>
+      </div>
+
+      <h1 class="hero-name">
+        <span class="line" data-delay="0">Hello, I'm</span>
+        <span class="line name-big" data-delay="200">RAM</span>
+      </h1>
+
+      <div class="hero-role">
+        <span class="role-prefix">I build</span>
+        <span id="typed-text" class="typed-role"></span>
+        <span class="typed-cursor">_</span>
+      </div>
+
+      <p class="hero-desc">
+        Passionate about crafting immersive digital experiences with clean code,
+        modern architecture, and obsessive attention to detail.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary magnetic" data-section="projects">
+          <span>View Projects</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#contact" class="btn-ghost magnetic" data-section="contact">
+          <span>Let's Talk</span>
+        </a>
+      </div>
+
+      <div class="hero-socials">
+        <a href="https://leetcode.com/u/007RAM/" target="_blank" class="social-chip" title="LeetCode">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="LeetCode" style="filter:invert(1);width:16px;height:16px;">
+          <span>LeetCode</span>
+        </a>
+        <a href="https://www.linkedin.com/in/sai-ram-k-847b61375/" target="_blank" class="social-chip">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://github.com/marias2005" target="_blank" class="social-chip">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
   <section id="about">
-  <div style="max-width: 900px; margin: auto; text-align: center; padding: 40px 20px;">
-    <h2 style="font-size: 36px; color: #00ffff; margin-bottom: 20px; text-shadow: 0 0 10px #00ffff;">About Me</h2>
-    <div style="background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 12px; box-shadow: 0 0 25px rgba(0,255,255,0.2);">
-      <p style="font-size: 18px; line-height: 1.8; color: #e0e0e0;">
-        I'm <strong>Ram</strong>, a passionate <strong>Full-Stack Developer</strong> dedicated to crafting immersive digital experiences. With a strong foundation in both front-end and back-end technologies, I aim to bridge the gap between design and technology.
-      </p>
-      <br/>
-      <p style="font-size: 18px; line-height: 1.8; color: #e0e0e0;">
-        My journey in tech has been driven by a deep curiosity and an eagerness to explore emerging technologies. Whether it's developing responsive web apps, experimenting with AI tools, or contributing to open-source projects, I'm always seeking ways to innovate and grow.
-      </p>
-      <br/>
-      <p style="font-size: 18px; line-height: 1.8; color: #e0e0e0;">
-        Beyond coding, I enjoy collaborating with creative minds, sharing knowledge, and building tools that make life easier for users. I'm currently expanding my skills in <strong>React</strong>, <strong>Next.js</strong>, and <strong>AI integration</strong> into modern web platforms.
-      </p>
-    </div>
-  </div>
-</section>
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 01. ABOUT</span>
+        <h2 class="section-title">Crafting Digital <em>Futures</em></h2>
+      </div>
 
+      <div class="about-grid">
+        <div class="about-text" data-aos="fade-right" data-aos-delay="100">
+          <div class="about-card glass-card">
+            <p>I'm <strong>Ram (Sai Ram K.)</strong>, a passionate <strong>Full-Stack Developer</strong> dedicated to building immersive digital experiences. With expertise spanning front-end and back-end, I bridge the gap between elegant design and robust technology.</p>
+          </div>
+          <div class="about-card glass-card" data-aos="fade-right" data-aos-delay="200">
+            <p>My journey has been driven by relentless curiosity — from building responsive web apps to integrating AI tools. Currently deepening expertise in <strong>React</strong>, <strong>Next.js</strong>, and <strong>AI-powered web platforms</strong>.</p>
+          </div>
+          <div class="about-card glass-card" data-aos="fade-right" data-aos-delay="300">
+            <p>Beyond code, I collaborate with creative minds, contribute to open-source, and build tools that genuinely improve user experiences. I believe great software is equal parts engineering and empathy.</p>
+          </div>
+        </div>
+
+        <div class="about-stats" data-aos="fade-left" data-aos-delay="100">
+          <div class="stat-card glass-card">
+            <div class="stat-num" data-count="4">0</div>
+            <div class="stat-label">Projects Shipped</div>
+          </div>
+          <div class="stat-card glass-card">
+            <div class="stat-num" data-count="10">0</div>
+            <div class="stat-label">Technologies</div>
+          </div>
+          <div class="stat-card glass-card">
+            <div class="stat-num" data-count="100">0</div>
+            <div class="stat-label">Problems Solved</div>
+            <div class="stat-suffix">+</div>
+          </div>
+          <div class="stat-card glass-card">
+            <div class="stat-num" data-count="2">0</div>
+            <div class="stat-label">Years Learning</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="timeline-section" data-aos="fade-up" data-aos-delay="100">
+        <h3 class="sub-title">Journey</h3>
+        <div class="timeline">
+          <div class="tl-item" data-aos="fade-right" data-aos-delay="0">
+            <div class="tl-dot"></div>
+            <div class="tl-content glass-card">
+              <span class="tl-date">2023</span>
+              <h4>Started Coding Journey</h4>
+              <p>Began with HTML, CSS, JavaScript fundamentals and fell in love with web development.</p>
+            </div>
+          </div>
+          <div class="tl-item" data-aos="fade-right" data-aos-delay="100">
+            <div class="tl-dot"></div>
+            <div class="tl-content glass-card">
+              <span class="tl-date">2024</span>
+              <h4>Full-Stack Development</h4>
+              <p>Mastered MERN stack, Python/Flask, and built multiple production-grade applications.</p>
+            </div>
+          </div>
+          <div class="tl-item" data-aos="fade-right" data-aos-delay="200">
+            <div class="tl-dot"></div>
+            <div class="tl-content glass-card">
+              <span class="tl-date">2025</span>
+              <h4>AI & Modern Web</h4>
+              <p>Exploring React, Next.js, AI integration, and building tools that make real impact.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
   <section id="skills">
-  <div style="max-width: 1000px; margin: auto; text-align: center; padding: 50px 20px;">
-    <h2 style="font-size: 36px; color: #00ffff; margin-bottom: 30px; text-shadow: 0 0 10px #00ffff;">My Skills</h2>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML Icon">
-        <p>HTML5</p>
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 02. SKILLS</span>
+        <h2 class="section-title">The <em>Toolkit</em></h2>
       </div>
-      <div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS Icon">
-        <p>CSS3</p>
-      </div>
-      <div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript Icon">
-        <p>JavaScript</p>
-      </div>
-      <div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/919/919851.png" alt="React Icon">
-        <p>React.js</p>
-      </div>
-      <div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python Icon">
-        <p>Python</p>
-      </div>
-      <div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/919/919836.png" alt="Git Icon">
-        <p>SQL</p>
-      </div>
-      <div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Java Icon">
-        <p>Java</p>
-      </div>
-      <div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="NodeJS Icon">
-        <p>github</p>
-      </div><div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="NodeJS Icon">
-        <p>MERN</p>
-      </div><div class="skill-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968381.png" alt="NodeJS Icon">
-        <p>Flask</p>
-    </div>
-  </div>
-</section>
-<section id="projects">
-    <div style="max-width: 1000px; margin: auto; text-align: center; padding: 60px 20px;">
-      <h2 style="font-size: 36px; color: #00ffff; margin-bottom: 30px; text-shadow: 0 0 10px #00ffff;">Projects</h2>
-      <div class="projects-grid">
-        <div class="project-card">
-          <a href = "https://marias2005.github.io/M4you/" target = "_blank">
-            <img src="M4you-11-25-2025.jpg" alt="Movie App"></a><br>
-          <br><p>Movies Trending App</p>
-        </div>
-        <div class="project-card">
-          <a href = "https://smartresume2-frontend-29ht.onrender.com/" target = "_blank">
-          <img src="smart-resume-builder-11-25-2025.jpg" alt="Chatbot"><br></a>
-          <br><p>Smart Resume Builder</p>
-        </div>
-        <div class="project-card">
-          <a href = "https://librarymanager-prnq.onrender.com/" target = "_blank">
-          <img src="library.png" alt="Portfolio"></a><br>
-          <br><p>Digital Library Manager</p>
-        </div>
-        <div class="project-card">
-          <a href = "https://marias2005.github.io/PORTFOLIO/" target = "_blank">
-          <img src="PortFolio-11-25-2025.jpg" alt="Portfolio"></a><br>
-          <br><p>Personal Portfolio Website</p>
-        </div>
-      </div>
-    </div>
-  </section>
-<section id="social">
-    <div style="max-width: 800px; margin: auto; text-align: center; padding: 60px 20px;">
-      <h2 style="font-size: 36px; color: #00ffff; margin-bottom: 30px; text-shadow: 0 0 10px #00ffff;">Connect With Me</h2>
-      <div class="skills-grid">
-        <a href="https://leetcode.com/u/007RAM/" target="_blank" class="skill-card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="LeetCode" style="width:48px; height:48px;">
-          <p>LeetCode</p>
-        </a>
-        <a href="https://www.linkedin.com/in/sai-ram-k-847b61375/" target="_blank" class="skill-card">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
-          <p>LinkedIn</p>
-        </a>
-        <a href="https://github.com/" target="_blank" class="skill-card">
-          <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub">
-          <p>GitHub</p>
-        </a>
-        <a href="https://www.instagram.com/mr_posessive_2?utm_source=qr&igsh=MXJyMTlkd2RhOXczOQ==" target="_blank" class="skill-card">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
-          <p>Instagram</p>
-        </a>
-      </div>
-    </div>
-  </section>
-  <section id="contact">
-  <div style="max-width: 800px; margin: auto; text-align: center; padding: 60px 20px;">
-    <h2 style="font-size: 36px; color: #00ffff; margin-bottom: 30px; text-shadow: 0 0 10px #00ffff;">Contact Me</h2>
-    <form class="contact-form">
-      <div class="input-group">
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Your Email" required>
-      </div>
-      <textarea rows="5" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
-</section>
 
+      <div class="skills-orbit-wrapper" data-aos="zoom-in" data-aos-delay="100">
+        <div class="orbit-center">
+          <div class="orbit-core">
+            <span>FULL</span>
+            <span>STACK</span>
+          </div>
+        </div>
+        <div class="orbit orbit-1">
+          <div class="orbit-item" style="--angle:0deg"><div class="orbit-icon">⚛️</div><span>React</span></div>
+          <div class="orbit-item" style="--angle:120deg"><div class="orbit-icon">🐍</div><span>Python</span></div>
+          <div class="orbit-item" style="--angle:240deg"><div class="orbit-icon">☕</div><span>Java</span></div>
+        </div>
+        <div class="orbit orbit-2">
+          <div class="orbit-item" style="--angle:60deg"><div class="orbit-icon">🌐</div><span>HTML5</span></div>
+          <div class="orbit-item" style="--angle:160deg"><div class="orbit-icon">🎨</div><span>CSS3</span></div>
+          <div class="orbit-item" style="--angle:260deg"><div class="orbit-icon">⚡</div><span>JS</span></div>
+        </div>
+      </div>
+
+      <div class="skills-grid" data-aos="fade-up" data-aos-delay="200">
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="0">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML5">
+          <div class="skill-glow"></div>
+          <span>HTML5</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:92%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="50">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS3">
+          <div class="skill-glow"></div>
+          <span>CSS3</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:88%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="100">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript">
+          <div class="skill-glow"></div>
+          <span>JavaScript</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:85%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="150">
+          <img src="https://cdn-icons-png.flaticon.com/512/919/919851.png" alt="React">
+          <div class="skill-glow"></div>
+          <span>React.js</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:78%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="200">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python">
+          <div class="skill-glow"></div>
+          <span>Python</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:80%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="250">
+          <img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Java">
+          <div class="skill-glow"></div>
+          <span>Java</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:70%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="300">
+          <img src="https://cdn-icons-png.flaticon.com/512/919/919836.png" alt="SQL">
+          <div class="skill-glow"></div>
+          <span>SQL</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:75%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="350">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub" style="filter:invert(1)">
+          <div class="skill-glow"></div>
+          <span>GitHub</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:82%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="400">
+          <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="MERN">
+          <div class="skill-glow"></div>
+          <span>MERN</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:76%"></div></div>
+        </div>
+        <div class="skill-node" data-aos="zoom-in" data-aos-delay="450">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968381.png" alt="Flask">
+          <div class="skill-glow"></div>
+          <span>Flask</span>
+          <div class="skill-bar"><div class="skill-fill" style="--pct:72%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section id="projects">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 03. PROJECTS</span>
+        <h2 class="section-title">Built to <em>Impress</em></h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <div class="project-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="project-card-inner">
+            <div class="project-img-wrap">
+              <img src="M4you-11-25-2025.jpg" alt="Movies Trending App" loading="lazy" onerror="this.style.display='none'">
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a href="https://marias2005.github.io/M4you/" target="_blank" class="proj-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                    Live Demo
+                  </a>
+                  <a href="https://github.com/marias2005/M4you" target="_blank" class="proj-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                </div>
+              </div>
+              <div class="project-num">01</div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>React</span><span>API</span><span>CSS</span>
+              </div>
+              <h3>Movies Trending App</h3>
+              <p>Real-time trending movies with dynamic search, responsive design, and live TMDB data integration.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="project-card-inner">
+            <div class="project-img-wrap">
+              <img src="smart-resume-builder-11-25-2025.jpg" alt="Smart Resume Builder" loading="lazy" onerror="this.style.display='none'">
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a href="https://smartresume2-frontend-29ht.onrender.com/" target="_blank" class="proj-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                    Live Demo
+                  </a>
+                  <a href="https://github.com/marias2005" target="_blank" class="proj-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                </div>
+              </div>
+              <div class="project-num">02</div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>MERN</span><span>AI</span><span>Node.js</span>
+              </div>
+              <h3>Smart Resume Builder</h3>
+              <p>AI-powered resume generator with live preview, PDF export, and intelligent content suggestions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="project-card-inner">
+            <div class="project-img-wrap">
+              <img src="library.png" alt="Digital Library Manager" loading="lazy" onerror="this.style.display='none'">
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a href="https://librarymanager-prnq.onrender.com/" target="_blank" class="proj-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                    Live Demo
+                  </a>
+                  <a href="https://github.com/marias2005" target="_blank" class="proj-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                </div>
+              </div>
+              <div class="project-num">03</div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>Flask</span><span>Python</span><span>SQL</span>
+              </div>
+              <h3>Digital Library Manager</h3>
+              <p>Full-featured library management system with search, cataloging, and user management.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="project-card-inner">
+            <div class="project-img-wrap">
+              <img src="PortFolio-11-25-2025.jpg" alt="Personal Portfolio" loading="lazy" onerror="this.style.display='none'">
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a href="https://marias2005.github.io/PORTFOLIO/" target="_blank" class="proj-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                    Live Demo
+                  </a>
+                  <a href="https://github.com/marias2005/PORTFOLIO" target="_blank" class="proj-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                </div>
+              </div>
+              <div class="project-num">04</div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags">
+                <span>HTML</span><span>CSS</span><span>JavaScript</span>
+              </div>
+              <h3>Personal Portfolio</h3>
+              <p>Responsive developer portfolio with smooth animations, matrix effects, and cinematic transitions.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE / STATS SECTION -->
+  <section id="experience">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 04. STATS</span>
+        <h2 class="section-title">By the <em>Numbers</em></h2>
+      </div>
+
+      <div class="stats-row">
+        <div class="big-stat glass-card" data-aos="zoom-in" data-aos-delay="0">
+          <div class="big-num" data-count="100">0</div>
+          <div class="big-label">LeetCode Problems</div>
+          <div class="big-sub">Solved & counting</div>
+        </div>
+        <div class="big-stat glass-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="big-num" data-count="4">0</div>
+          <div class="big-label">Live Projects</div>
+          <div class="big-sub">Deployed on the web</div>
+        </div>
+        <div class="big-stat glass-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="big-num" data-count="10">0</div>
+          <div class="big-label">Technologies</div>
+          <div class="big-sub">In the toolkit</div>
+        </div>
+        <div class="big-stat glass-card" data-aos="zoom-in" data-aos-delay="300">
+          <div class="big-num" data-count="2">0</div>
+          <div class="big-label">Years of Growth</div>
+          <div class="big-sub">And still hungry</div>
+        </div>
+      </div>
+
+      <div class="profiles-row" data-aos="fade-up" data-aos-delay="100">
+        <a href="https://leetcode.com/u/007RAM/" target="_blank" class="profile-chip glass-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="LeetCode" style="filter:invert(1);width:28px;height:28px;">
+          <div>
+            <strong>LeetCode</strong>
+            <span>007RAM</span>
+          </div>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/sai-ram-k-847b61375/" target="_blank" class="profile-chip glass-card">
+          <svg viewBox="0 0 24 24" fill="#0A66C2" width="28"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <div>
+            <strong>LinkedIn</strong>
+            <span>Sai Ram K.</span>
+          </div>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+        <a href="https://github.com/marias2005" target="_blank" class="profile-chip glass-card">
+          <svg viewBox="0 0 24 24" fill="white" width="28"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          <div>
+            <strong>GitHub</strong>
+            <span>marias2005</span>
+          </div>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+        <a href="https://www.instagram.com/mr_posessive_2" target="_blank" class="profile-chip glass-card">
+          <svg viewBox="0 0 24 24" fill="url(#ig-grad)" width="28">
+            <defs>
+              <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#f09433"/>
+                <stop offset="50%" style="stop-color:#e6683c"/>
+                <stop offset="100%" style="stop-color:#dc2743"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+          <div>
+            <strong>Instagram</strong>
+            <span>mr_posessive_2</span>
+          </div>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact">
+    <div class="section-container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 05. CONTACT</span>
+        <h2 class="section-title">Let's <em>Build Together</em></h2>
+      </div>
+
+      <div class="contact-layout">
+        <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
+          <div class="glass-card contact-card">
+            <div class="contact-status">
+              <span class="status-dot"></span>
+              <span>Available for new projects</span>
+            </div>
+            <p>Have an interesting project in mind? Want to collaborate or just say hi? My inbox is always open.</p>
+            <div class="respond-info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              <span>Usually responds within 24 hours</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form-new glass-card" id="contactForm" data-aos="fade-left" data-aos-delay="100">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="from_name" name="from_name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="from_email" name="from_email" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary send-btn" id="sendBtn">
+            <span id="btn-text">Send Message</span>
+            <svg id="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <div class="btn-loader" id="btnLoader"></div>
+          </button>
+          <div class="form-message" id="formMessage"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2025 @VRL All rights reserved.</p>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span class="logo-bracket">[</span>RAM<span class="logo-bracket">]</span>
+      </div>
+      <p>Designed & Built by <strong>Ram</strong> · 2025</p>
+      <p class="footer-copy">© 2025 @VRL · All rights reserved.</p>
+    </div>
   </footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
