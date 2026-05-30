@@ -1,546 +1,677 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RAM | Software Engineer</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>RAM · Digital Engineer</title>
+  <meta name="description" content="Ram (Sai Ram K.) — Full-Stack Engineer crafting immersive digital products."/>
+  <meta name="theme-color" content="#020408"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <!-- CUSTOM CURSOR -->
-  <div id="cursor"></div>
-  <div id="cursor-trail"></div>
+<!-- ════════════════════════════════════
+     CINEMATIC BOOT SEQUENCE
+════════════════════════════════════ -->
+<div id="boot-screen">
+  <canvas id="boot-canvas"></canvas>
+  <div class="boot-ui">
+    <svg viewBox="0 0 100 100" class="boot-hex" aria-hidden="true">
+      <polygon points="50,2 93,26 93,74 50,98 7,74 7,26"
+               fill="none" stroke="var(--cyan)" stroke-width="1.5"/>
+      <polygon points="50,12 83,30 83,70 50,88 17,70 17,30"
+               fill="none" stroke="var(--cyan)" stroke-width="0.5" opacity="0.35"/>
+      <text x="50" y="59" text-anchor="middle"
+            fill="var(--cyan)" font-family="'Share Tech Mono'"
+            font-size="22" font-weight="700">R</text>
+    </svg>
+    <div class="boot-lines" id="boot-lines"></div>
+    <div class="boot-bar-wrap">
+      <div class="boot-bar"><div class="boot-fill" id="boot-fill"></div></div>
+      <span class="boot-pct" id="boot-pct">0%</span>
+    </div>
+    <div class="boot-skip" id="boot-skip" role="button" tabindex="0">
+      PRESS ANY KEY TO SKIP
+    </div>
+  </div>
+</div>
 
-  <!-- LOADER -->
-  <div id="loader">
-    <div class="loader-inner">
-      <div class="loader-ring"></div>
-      <div class="loader-text">
-        <span class="load-label">INITIALIZING</span>
-        <div class="load-bar"><div class="load-fill"></div></div>
-        <span class="load-pct" id="load-pct">0%</span>
+<!-- Custom Cursor -->
+<div id="cur-dot"  aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+
+<!-- Scroll Progress -->
+<div id="scroll-prog" aria-hidden="true"></div>
+
+<!-- ════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════ -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-logo">
+    <span class="logo-bracket">[</span>RAM<span class="logo-bracket">]</span>
+  </div>
+
+  <ul class="nav-list" id="nav-list">
+    <li><a href="#hero"     class="nav-link" data-label="00">SYSTEM</a></li>
+    <li><a href="#about"    class="nav-link" data-label="01">IDENTITY</a></li>
+    <li><a href="#skills"   class="nav-link" data-label="02">ARSENAL</a></li>
+    <li><a href="#projects" class="nav-link" data-label="03">MISSIONS</a></li>
+    <li><a href="#stats"    class="nav-link" data-label="04">METRICS</a></li>
+    <li><a href="#contact"  class="nav-link" data-label="05">CONNECT</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <div class="nav-status">
+      <span class="status-pulse"></span>
+      <span>ONLINE</span>
+    </div>
+    <button class="nav-burger" id="nav-burger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════
+     HERO — Canvas Background + Hologram
+════════════════════════════════════ -->
+<section id="hero" aria-label="Introduction">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <div class="hero-body">
+
+    <!-- LEFT: Text -->
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="badge-blink" aria-hidden="true">▮</span>
+        FULL-STACK ENGINEER · AVAILABLE
+      </div>
+
+      <h1 class="hero-h1">
+        <span class="h1-line">HELLO,</span>
+        <span class="h1-line h1-name">I'M RAM</span>
+      </h1>
+
+      <div class="hero-role-line">
+        <span class="role-pre" aria-hidden="true">&gt;&nbsp;</span>
+        <span id="typed-output" aria-live="polite"></span><span class="typed-cur" aria-hidden="true">█</span>
+      </div>
+
+      <p class="hero-sub">
+        Engineering immersive digital products at the intersection of
+        <em>performance</em>, <em>aesthetics</em>, and <em>human experience</em>.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#projects" class="cta-primary mag-btn">
+          <span class="cta-inner">VIEW MISSIONS</span>
+          <div class="cta-glare" aria-hidden="true"></div>
+        </a>
+        <a href="#contact" class="cta-ghost mag-btn">INITIATE CONTACT</a>
+      </div>
+
+      <div class="hero-socials">
+        <a href="https://github.com/0007RAM" target="_blank" rel="noopener noreferrer"
+           class="hsoc" title="GitHub — 0007RAM">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-label="GitHub">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/007ram/" target="_blank" rel="noopener noreferrer"
+           class="hsoc" title="LinkedIn — Sai Ram K">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-label="LinkedIn">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+        <a href="https://leetcode.com/u/0007RAM/" target="_blank" rel="noopener noreferrer"
+           class="hsoc" title="LeetCode — 0007RAM">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"
+               alt="LeetCode" width="18" height="18" style="filter:invert(1)">
+        </a>
+        <a href="https://www.instagram.com/mr_posessive_2" target="_blank" rel="noopener noreferrer"
+           class="hsoc" title="Instagram — mr_posessive_2">
+          <svg viewBox="0 0 24 24" aria-label="Instagram">
+            <defs>
+              <linearGradient id="ig-hero" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%"   stop-color="#f09433"/>
+                <stop offset="50%"  stop-color="#e6683c"/>
+                <stop offset="100%" stop-color="#dc2743"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#ig-hero)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Holographic Portrait -->
+    <div class="hero-portrait" id="portrait-wrap" aria-hidden="true">
+      <div class="holo-ring holo-r1"></div>
+      <div class="holo-ring holo-r2"></div>
+      <div class="holo-ring holo-r3"></div>
+      <div class="holo-particles" id="holo-particles"></div>
+
+      <div class="portrait-frame" id="portrait-frame">
+        <div class="portrait-scanlines"></div>
+        <img src="ram.png" alt="Ram — Full-Stack Engineer" class="portrait-img"
+             onerror="this.style.display='none';document.getElementById('portrait-fallback').style.display='flex'">
+        <div class="portrait-fallback" id="portrait-fallback">
+          <svg viewBox="0 0 120 140" fill="none" width="120">
+            <circle cx="60" cy="45" r="28" stroke="var(--cyan)" stroke-width="1.5"/>
+            <path d="M10 140 Q10 95 60 95 Q110 95 110 140"
+                  stroke="var(--cyan)" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="portrait-overlay"></div>
+        <div class="portrait-glitch" id="p-glitch"></div>
+      </div>
+
+      <div class="holo-data">
+        <div class="hd-item"><span class="hd-k">ID</span><span class="hd-v">SAI-RAM-K</span></div>
+        <div class="hd-item"><span class="hd-k">ROLE</span><span class="hd-v">FS-ENG</span></div>
+        <div class="hd-item"><span class="hd-k">STATUS</span><span class="hd-v hd-green">ACTIVE</span></div>
       </div>
     </div>
   </div>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <div class="nav-logo">
-      <span class="logo-bracket">[</span>RAM<span class="logo-bracket">]</span>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#home" data-section="home">Home</a></li>
-      <li><a href="#about" data-section="about">About</a></li>
-      <li><a href="#skills" data-section="skills">Skills</a></li>
-      <li><a href="#projects" data-section="projects">Projects</a></li>
-      <li><a href="#experience" data-section="experience">Stats</a></li>
-      <li><a href="#contact" data-section="contact">Contact</a></li>
-    </ul>
-    <div class="nav-status">
-      <span class="status-dot"></span>
-      <span>Available for hire</span>
-    </div>
-    <button class="nav-toggle" id="nav-toggle">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+  <div class="scroll-hint" aria-hidden="true">
+    <div class="sh-arrow"><span></span><span></span></div>
+    <span class="sh-txt">SCROLL TO EXPLORE</span>
+  </div>
+</section>
 
-  <!-- HERO SECTION -->
-  <section id="home">
-    <canvas id="hero-canvas"></canvas>
-    <div class="hero-grid"></div>
-    <div class="mouse-light" id="mouse-light"></div>
+<!-- ════════════════════════════════════
+     ABOUT — IDENTITY
+════════════════════════════════════ -->
+<section id="about" class="reveal-section" aria-label="About Ram">
+  <div class="sec-wrap">
+    <span class="sec-tag">// 01 · IDENTITY</span>
+    <h2 class="sec-title">THE <em>ENGINEER</em><br>BEHIND THE CODE</h2>
 
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        <span>Full-Stack Engineer · Open to Opportunities</span>
+    <div class="about-grid">
+      <!-- Bio cards -->
+      <div class="about-bio">
+        <div class="bio-card glass" data-reveal>
+          <span class="bio-card-tag">ABOUT.EXE</span>
+          <p>I'm <strong>Ram (Sai Ram K)</strong>, a passionate <strong>Full-Stack Developer</strong>
+          who engineers immersive digital products. I bridge elegant design with robust architecture
+          to create experiences users genuinely remember.</p>
+        </div>
+        <div class="bio-card glass" data-reveal>
+          <span class="bio-card-tag">MISSION.LOG</span>
+          <p>Driven by relentless curiosity — building responsive web apps, integrating AI systems,
+          shipping real products. Currently mastering <strong>React</strong>, <strong>Next.js</strong>,
+          and <strong>AI-native web applications</strong>.</p>
+        </div>
+        <div class="bio-card glass" data-reveal>
+          <span class="bio-card-tag">PHILOSOPHY.TXT</span>
+          <p>Great software is equal parts engineering and empathy. I collaborate with creative minds,
+          contribute to open-source, and build tools that genuinely improve how people interact
+          with technology.</p>
+        </div>
       </div>
 
-      <h1 class="hero-name">
-        <span class="line" data-delay="0">Hello, I'm</span>
-        <span class="line name-big" data-delay="200">RAM</span>
-      </h1>
-
-      <div class="hero-role">
-        <span class="role-prefix">I build</span>
-        <span id="typed-text" class="typed-role"></span>
-        <span class="typed-cursor">_</span>
-      </div>
-
-      <p class="hero-desc">
-        Passionate about crafting immersive digital experiences with clean code,
-        modern architecture, and obsessive attention to detail.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#projects" class="btn-primary magnetic" data-section="projects">
-          <span>View Projects</span>
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="#contact" class="btn-ghost magnetic" data-section="contact">
-          <span>Let's Talk</span>
-        </a>
-      </div>
-
-      <div class="hero-socials">
-        <a href="https://leetcode.com/u/007RAM/" target="_blank" class="social-chip" title="LeetCode">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="LeetCode" style="filter:invert(1);width:16px;height:16px;">
-          <span>LeetCode</span>
-        </a>
-        <a href="https://www.linkedin.com/in/sai-ram-k-847b61375/" target="_blank" class="social-chip">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          <span>LinkedIn</span>
-        </a>
-        <a href="https://github.com/marias2005" target="_blank" class="social-chip">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-          <span>GitHub</span>
-        </a>
+      <!-- Stat hexes -->
+      <div class="about-stats-panel">
+        <div class="stat-hex glass" data-reveal data-count="4">
+          <div class="sh-val">0</div>
+          <div class="sh-key">PROJECTS SHIPPED</div>
+        </div>
+        <div class="stat-hex glass" data-reveal data-count="14" data-suffix="+">
+          <div class="sh-val">0</div>
+          <div class="sh-key">TECHNOLOGIES</div>
+        </div>
+        <div class="stat-hex glass" data-reveal data-count="420" data-suffix="+">
+          <div class="sh-val">0</div>
+          <div class="sh-key">PROBLEMS SOLVED</div>
+        </div>
+        <div class="stat-hex glass" data-reveal data-count="3">
+          <div class="sh-val">0</div>
+          <div class="sh-key">YEARS GROWING</div>
+        </div>
       </div>
     </div>
 
-    <div class="hero-scroll-hint">
-      <div class="scroll-line"></div>
-      <span>SCROLL</span>
-    </div>
-  </section>
+    <!-- Timeline -->
+    <div class="timeline-wrap">
+      <div class="tl-title">// GROWTH TIMELINE</div>
+      <div class="timeline">
 
-  <!-- ABOUT SECTION -->
-  <section id="about">
-    <div class="section-container">
-      <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">// 01. ABOUT</span>
-        <h2 class="section-title">Crafting Digital <em>Futures</em></h2>
-      </div>
+        <div class="tl-node" data-reveal>
+  <div class="tl-yr">2023</div>
+  <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+  <div class="tl-card glass">
+    <h4>FOUNDATIONS</h4>
+    <p>Started programming journey. Learned HTML, CSS, JavaScript and built first responsive web projects.</p>
+  </div>
+</div>
 
-      <div class="about-grid">
-        <div class="about-text" data-aos="fade-right" data-aos-delay="100">
-          <div class="about-card glass-card">
-            <p>I'm <strong>Ram (Sai Ram K.)</strong>, a passionate <strong>Full-Stack Developer</strong> dedicated to building immersive digital experiences. With expertise spanning front-end and back-end, I bridge the gap between elegant design and robust technology.</p>
-          </div>
-          <div class="about-card glass-card" data-aos="fade-right" data-aos-delay="200">
-            <p>My journey has been driven by relentless curiosity — from building responsive web apps to integrating AI tools. Currently deepening expertise in <strong>React</strong>, <strong>Next.js</strong>, and <strong>AI-powered web platforms</strong>.</p>
-          </div>
-          <div class="about-card glass-card" data-aos="fade-right" data-aos-delay="300">
-            <p>Beyond code, I collaborate with creative minds, contribute to open-source, and build tools that genuinely improve user experiences. I believe great software is equal parts engineering and empathy.</p>
-          </div>
-        </div>
+<div class="tl-node" data-reveal>
+  <div class="tl-yr">2024</div>
+  <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+  <div class="tl-card glass">
+    <h4>BACKEND & DSA</h4>
+    <p>Mastered Java, Python, SQL, Flask and Data Structures & Algorithms. Solved 100+ coding problems.</p>
+  </div>
+</div>
 
-        <div class="about-stats" data-aos="fade-left" data-aos-delay="100">
-          <div class="stat-card glass-card">
-            <div class="stat-num" data-count="4">0</div>
-            <div class="stat-label">Projects Shipped</div>
-          </div>
-          <div class="stat-card glass-card">
-            <div class="stat-num" data-count="10">0</div>
-            <div class="stat-label">Technologies</div>
-          </div>
-          <div class="stat-card glass-card">
-            <div class="stat-num" data-count="100">0</div>
-            <div class="stat-label">Problems Solved</div>
-            <div class="stat-suffix">+</div>
-          </div>
-          <div class="stat-card glass-card">
-            <div class="stat-num" data-count="2">0</div>
-            <div class="stat-label">Years Learning</div>
-          </div>
-        </div>
-      </div>
+<div class="tl-node" data-reveal>
+  <div class="tl-yr">2025</div>
+  <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+  <div class="tl-card glass">
+    <h4>FULL-STACK DEVELOPMENT</h4>
+    <p>Built and deployed multiple real-world projects using MERN stack, React, APIs and cloud platforms.</p>
+  </div>
+</div>
 
-      <!-- TIMELINE -->
-      <div class="timeline-section" data-aos="fade-up" data-aos-delay="100">
-        <h3 class="sub-title">Journey</h3>
-        <div class="timeline">
-          <div class="tl-item" data-aos="fade-right" data-aos-delay="0">
-            <div class="tl-dot"></div>
-            <div class="tl-content glass-card">
-              <span class="tl-date">2023</span>
-              <h4>Started Coding Journey</h4>
-              <p>Began with HTML, CSS, JavaScript fundamentals and fell in love with web development.</p>
-            </div>
-          </div>
-          <div class="tl-item" data-aos="fade-right" data-aos-delay="100">
-            <div class="tl-dot"></div>
-            <div class="tl-content glass-card">
-              <span class="tl-date">2024</span>
-              <h4>Full-Stack Development</h4>
-              <p>Mastered MERN stack, Python/Flask, and built multiple production-grade applications.</p>
-            </div>
-          </div>
-          <div class="tl-item" data-aos="fade-right" data-aos-delay="200">
-            <div class="tl-dot"></div>
-            <div class="tl-content glass-card">
-              <span class="tl-date">2025</span>
-              <h4>AI & Modern Web</h4>
-              <p>Exploring React, Next.js, AI integration, and building tools that make real impact.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS SECTION -->
-  <section id="skills">
-    <div class="section-container">
-      <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">// 02. SKILLS</span>
-        <h2 class="section-title">The <em>Toolkit</em></h2>
-      </div>
-
-      <div class="skills-orbit-wrapper" data-aos="zoom-in" data-aos-delay="100">
-        <div class="orbit-center">
-          <div class="orbit-core">
-            <span>FULL</span>
-            <span>STACK</span>
-          </div>
-        </div>
-        <div class="orbit orbit-1">
-          <div class="orbit-item" style="--angle:0deg"><div class="orbit-icon">⚛️</div><span>React</span></div>
-          <div class="orbit-item" style="--angle:120deg"><div class="orbit-icon">🐍</div><span>Python</span></div>
-          <div class="orbit-item" style="--angle:240deg"><div class="orbit-icon">☕</div><span>Java</span></div>
-        </div>
-        <div class="orbit orbit-2">
-          <div class="orbit-item" style="--angle:60deg"><div class="orbit-icon">🌐</div><span>HTML5</span></div>
-          <div class="orbit-item" style="--angle:160deg"><div class="orbit-icon">🎨</div><span>CSS3</span></div>
-          <div class="orbit-item" style="--angle:260deg"><div class="orbit-icon">⚡</div><span>JS</span></div>
-        </div>
-      </div>
-
-      <div class="skills-grid" data-aos="fade-up" data-aos-delay="200">
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="0">
-          <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML5">
-          <div class="skill-glow"></div>
-          <span>HTML5</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:92%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="50">
-          <img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS3">
-          <div class="skill-glow"></div>
-          <span>CSS3</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:88%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="100">
-          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript">
-          <div class="skill-glow"></div>
-          <span>JavaScript</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:85%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="150">
-          <img src="https://cdn-icons-png.flaticon.com/512/919/919851.png" alt="React">
-          <div class="skill-glow"></div>
-          <span>React.js</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:78%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="200">
-          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python">
-          <div class="skill-glow"></div>
-          <span>Python</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:80%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="250">
-          <img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Java">
-          <div class="skill-glow"></div>
-          <span>Java</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:70%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="300">
-          <img src="https://cdn-icons-png.flaticon.com/512/919/919836.png" alt="SQL">
-          <div class="skill-glow"></div>
-          <span>SQL</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:75%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="350">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub" style="filter:invert(1)">
-          <div class="skill-glow"></div>
-          <span>GitHub</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:82%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="400">
-          <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="MERN">
-          <div class="skill-glow"></div>
-          <span>MERN</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:76%"></div></div>
-        </div>
-        <div class="skill-node" data-aos="zoom-in" data-aos-delay="450">
-          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968381.png" alt="Flask">
-          <div class="skill-glow"></div>
-          <span>Flask</span>
-          <div class="skill-bar"><div class="skill-fill" style="--pct:72%"></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS SECTION -->
-  <section id="projects">
-    <div class="section-container">
-      <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">// 03. PROJECTS</span>
-        <h2 class="section-title">Built to <em>Impress</em></h2>
-      </div>
-
-      <div class="projects-grid">
-
-        <div class="project-card" data-aos="fade-up" data-aos-delay="0">
-          <div class="project-card-inner">
-            <div class="project-img-wrap">
-              <img src="M4you-11-25-2025.jpg" alt="Movies Trending App" loading="lazy" onerror="this.style.display='none'">
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a href="https://marias2005.github.io/M4you/" target="_blank" class="proj-link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-                    Live Demo
-                  </a>
-                  <a href="https://github.com/marias2005/M4you" target="_blank" class="proj-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                </div>
-              </div>
-              <div class="project-num">01</div>
-            </div>
-            <div class="project-info">
-              <div class="project-tags">
-                <span>React</span><span>API</span><span>CSS</span>
-              </div>
-              <h3>Movies Trending App</h3>
-              <p>Real-time trending movies with dynamic search, responsive design, and live TMDB data integration.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="project-card-inner">
-            <div class="project-img-wrap">
-              <img src="smart-resume-builder-11-25-2025.jpg" alt="Smart Resume Builder" loading="lazy" onerror="this.style.display='none'">
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a href="https://smartresume2-frontend-29ht.onrender.com/" target="_blank" class="proj-link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-                    Live Demo
-                  </a>
-                  <a href="https://github.com/marias2005" target="_blank" class="proj-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                </div>
-              </div>
-              <div class="project-num">02</div>
-            </div>
-            <div class="project-info">
-              <div class="project-tags">
-                <span>MERN</span><span>AI</span><span>Node.js</span>
-              </div>
-              <h3>Smart Resume Builder</h3>
-              <p>AI-powered resume generator with live preview, PDF export, and intelligent content suggestions.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="project-card-inner">
-            <div class="project-img-wrap">
-              <img src="library.png" alt="Digital Library Manager" loading="lazy" onerror="this.style.display='none'">
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a href="https://librarymanager-prnq.onrender.com/" target="_blank" class="proj-link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-                    Live Demo
-                  </a>
-                  <a href="https://github.com/marias2005" target="_blank" class="proj-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                </div>
-              </div>
-              <div class="project-num">03</div>
-            </div>
-            <div class="project-info">
-              <div class="project-tags">
-                <span>Flask</span><span>Python</span><span>SQL</span>
-              </div>
-              <h3>Digital Library Manager</h3>
-              <p>Full-featured library management system with search, cataloging, and user management.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="project-card-inner">
-            <div class="project-img-wrap">
-              <img src="PortFolio-11-25-2025.jpg" alt="Personal Portfolio" loading="lazy" onerror="this.style.display='none'">
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a href="https://marias2005.github.io/PORTFOLIO/" target="_blank" class="proj-link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-                    Live Demo
-                  </a>
-                  <a href="https://github.com/marias2005/PORTFOLIO" target="_blank" class="proj-link">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                </div>
-              </div>
-              <div class="project-num">04</div>
-            </div>
-            <div class="project-info">
-              <div class="project-tags">
-                <span>HTML</span><span>CSS</span><span>JavaScript</span>
-              </div>
-              <h3>Personal Portfolio</h3>
-              <p>Responsive developer portfolio with smooth animations, matrix effects, and cinematic transitions.</p>
-            </div>
-          </div>
-        </div>
+<div class="tl-node" data-reveal>
+  <div class="tl-yr">2026</div>
+  <div class="tl-dot-wrap"><div class="tl-dot active"></div></div>
+  <div class="tl-card glass">
+    <h4>SPRING BOOT & AI</h4>
+    <p>Learning Spring Boot, Maven, Gradle and Machine Learning while building production-ready applications and preparing for software engineering roles.</p>
+  </div>
+</div>
+<div class="tl-node" data-reveal>
+  <div class="tl-yr">NEXT</div>
+  <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+  <div class="tl-card glass">
+    <h4>SOFTWARE ENGINEER</h4>
+    <p>Building scalable products, contributing to impactful systems and growing into a world-class engineer.</p>
+  </div>
+</div>
 
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- EXPERIENCE / STATS SECTION -->
-  <section id="experience">
-    <div class="section-container">
-      <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">// 04. STATS</span>
-        <h2 class="section-title">By the <em>Numbers</em></h2>
-      </div>
+<!-- ════════════════════════════════════
+     SKILLS — GALAXY + GRID
+════════════════════════════════════ -->
+<section id="skills" class="reveal-section" aria-label="Skills">
+  <div class="sec-wrap">
+    <span class="sec-tag">// 02 · ARSENAL</span>
+    <h2 class="sec-title">TECHNOLOGY<br><em>ECOSYSTEM</em></h2>
 
-      <div class="stats-row">
-        <div class="big-stat glass-card" data-aos="zoom-in" data-aos-delay="0">
-          <div class="big-num" data-count="100">0</div>
-          <div class="big-label">LeetCode Problems</div>
-          <div class="big-sub">Solved & counting</div>
-        </div>
-        <div class="big-stat glass-card" data-aos="zoom-in" data-aos-delay="100">
-          <div class="big-num" data-count="4">0</div>
-          <div class="big-label">Live Projects</div>
-          <div class="big-sub">Deployed on the web</div>
-        </div>
-        <div class="big-stat glass-card" data-aos="zoom-in" data-aos-delay="200">
-          <div class="big-num" data-count="10">0</div>
-          <div class="big-label">Technologies</div>
-          <div class="big-sub">In the toolkit</div>
-        </div>
-        <div class="big-stat glass-card" data-aos="zoom-in" data-aos-delay="300">
-          <div class="big-num" data-count="2">0</div>
-          <div class="big-label">Years of Growth</div>
-          <div class="big-sub">And still hungry</div>
-        </div>
-      </div>
+    <!-- Interactive galaxy canvas -->
+    <div class="skill-galaxy-wrap">
+      <canvas id="skill-canvas" aria-hidden="true"></canvas>
+      <div class="skill-tooltip" id="skill-tooltip" role="tooltip"></div>
+    </div>
 
-      <div class="profiles-row" data-aos="fade-up" data-aos-delay="100">
-        <a href="https://leetcode.com/u/007RAM/" target="_blank" class="profile-chip glass-card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="LeetCode" style="filter:invert(1);width:28px;height:28px;">
-          <div>
-            <strong>LeetCode</strong>
-            <span>007RAM</span>
+    <!-- Skill cards grid (injected by JS) -->
+    <div class="skill-grid" id="skill-grid" aria-label="Skill proficiency cards"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     PROJECTS — 3D SHOWCASE
+════════════════════════════════════ -->
+<section id="projects" class="reveal-section" aria-label="Projects">
+  <div class="sec-wrap">
+    <span class="sec-tag">// 03 · MISSIONS</span>
+    <h2 class="sec-title">DEPLOYED<br><em>OPERATIONS</em></h2>
+
+    <div class="projects-3d">
+
+      <!-- PROJECT 01 -->
+      <div class="proj-item" data-reveal>
+        <div class="proj-shell" data-tilt>
+          <div class="proj-num">01</div>
+          <div class="proj-img-zone">
+            <img src="M4you-11-25-2025.png" alt="Movies Trending App" loading="lazy"
+                 onerror="this.parentElement.classList.add('no-img')">
+            <div class="proj-scanline" aria-hidden="true"></div>
+            <div class="proj-corner tl" aria-hidden="true"></div>
+            <div class="proj-corner tr" aria-hidden="true"></div>
+            <div class="proj-corner bl" aria-hidden="true"></div>
+            <div class="proj-corner br" aria-hidden="true"></div>
+            <div class="proj-hud" aria-hidden="true"><span>RENDER_OK</span><span>60fps</span></div>
           </div>
-          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          <div class="proj-info">
+            <div class="proj-tags">
+              <span>React</span><span>TMDB API</span><span>CSS3</span>
+            </div>
+            <h3 class="proj-title">MOVIES TRENDING APP</h3>
+            <p class="proj-desc">Real-time trending movies with dynamic search, live TMDB data, and fluid responsive UI.</p>
+            <div class="proj-links">
+              <a href="https://0007RAM.github.io/M4you/" target="_blank" rel="noopener noreferrer" class="pl-live">
+                <span class="pl-dot"></span>LIVE DEMO
+              </a>
+              <a href="https://github.com/000RAM/M4you" target="_blank" rel="noopener noreferrer" class="pl-gh">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="13" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                SOURCE
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 02 -->
+      <div class="proj-item" data-reveal>
+        <div class="proj-shell" data-tilt>
+          <div class="proj-num">02</div>
+          <div class="proj-img-zone">
+            <img src="smart-resume-builder-11-25-2025.png" alt="Smart Resume Builder" loading="lazy"
+                 onerror="this.parentElement.classList.add('no-img')">
+            <div class="proj-scanline" aria-hidden="true"></div>
+            <div class="proj-corner tl"></div><div class="proj-corner tr"></div>
+            <div class="proj-corner bl"></div><div class="proj-corner br"></div>
+            <div class="proj-hud" aria-hidden="true"><span>AI_ACTIVE</span><span>v2.0</span></div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-tags"><span>MERN</span><span>AI</span><span>Node.js</span></div>
+            <h3 class="proj-title">SMART RESUME BUILDER</h3>
+            <p class="proj-desc">AI-powered resume generation with live preview, PDF export, and intelligent content suggestions.</p>
+            <div class="proj-links">
+              <a href="https://smartresume2-frontend-29ht.onrender.com/" target="_blank" rel="noopener noreferrer" class="pl-live">
+                <span class="pl-dot"></span>LIVE DEMO
+              </a>
+              <a href="https://github.com/marias2005" target="_blank" rel="noopener noreferrer" class="pl-gh">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="13" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                SOURCE
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 03 -->
+      <div class="proj-item" data-reveal>
+        <div class="proj-shell" data-tilt>
+          <div class="proj-num">03</div>
+          <div class="proj-img-zone">
+            <img src="library.png" alt="Digital Library Manager" loading="lazy"
+                 onerror="this.parentElement.classList.add('no-img')">
+            <div class="proj-scanline" aria-hidden="true"></div>
+            <div class="proj-corner tl"></div><div class="proj-corner tr"></div>
+            <div class="proj-corner bl"></div><div class="proj-corner br"></div>
+            <div class="proj-hud" aria-hidden="true"><span>DB_ONLINE</span><span>Flask</span></div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-tags"><span>Python</span><span>Flask</span><span>SQL</span></div>
+            <h3 class="proj-title">DIGITAL LIBRARY MANAGER</h3>
+            <p class="proj-desc">Full-featured library management with cataloging, search, and multi-user administration.</p>
+            <div class="proj-links">
+              <a href="https://librarymanager-prnq.onrender.com/" target="_blank" rel="noopener noreferrer" class="pl-live">
+                <span class="pl-dot"></span>LIVE DEMO
+              </a>
+              <a href="https://github.com/marias2005" target="_blank" rel="noopener noreferrer" class="pl-gh">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="13" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                SOURCE
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 04 -->
+      <div class="proj-item" data-reveal>
+        <div class="proj-shell" data-tilt>
+          <div class="proj-num">04</div>
+          <div class="proj-img-zone">
+            <img src="PortFolio-11-25-2025.png" alt="Personal Portfolio Website" loading="lazy"
+                 onerror="this.parentElement.classList.add('no-img')">
+            <div class="proj-scanline" aria-hidden="true"></div>
+            <div class="proj-corner tl"></div><div class="proj-corner tr"></div>
+            <div class="proj-corner bl"></div><div class="proj-corner br"></div>
+            <div class="proj-hud" aria-hidden="true"><span>HTML_RENDER</span><span>v1.0</span></div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <h3 class="proj-title">PORTFOLIO SYSTEM</h3>
+            <p class="proj-desc">Matrix-effect developer portfolio with smooth cinematic transitions and animated interactions.</p>
+            <div class="proj-links">
+              <a href="https://0007RAM.github.io/PORTFOLIO/" target="_blank" rel="noopener noreferrer" class="pl-live">
+                <span class="pl-dot"></span>LIVE DEMO
+              </a>
+              <a href="https://github.com/0007RAM/PORTFOLIO" target="_blank" rel="noopener noreferrer" class="pl-gh">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="13" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                SOURCE
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     STATS / METRICS DASHBOARD
+════════════════════════════════════ -->
+<section id="stats" class="reveal-section" aria-label="Stats and metrics">
+  <div class="sec-wrap">
+    <span class="sec-tag">// 04 · METRICS</span>
+    <h2 class="sec-title">PERFORMANCE<br><em>DASHBOARD</em></h2>
+
+    <div class="metrics-grid">
+      <div class="metric-card glass" data-reveal data-count="400" data-suffix="+">
+        <span class="mc-icon">⚡</span>
+        <span class="mc-val">0</span>
+        <div class="mc-label">LeetCode Problems</div>
+        <div class="mc-sub">DSA · Algorithms · Logic</div>
+      </div>
+      <div class="metric-card glass" data-reveal data-count="4">
+        <span class="mc-icon">🚀</span>
+        <span class="mc-val">0</span>
+        <div class="mc-label">Live Projects</div>
+        <div class="mc-sub">Deployed · Active · Monitored</div>
+      </div>
+      <div class="metric-card glass" data-reveal data-count="14" data-suffix="+">
+        <span class="mc-icon">🛠</span>
+        <span class="mc-val">0</span>
+        <div class="mc-label">Technologies</div>
+        <div class="mc-sub">Frontend · Backend · DevOps</div>
+      </div>
+      <div class="metric-card glass" data-reveal data-count="3">
+        <span class="mc-icon">📈</span>
+        <span class="mc-val">0</span>
+        <div class="mc-label">Years Active</div>
+        <div class="mc-sub">Growing · Learning · Shipping</div>
+      </div>
+    </div>
+
+    <!-- External profiles -->
+    <div class="profiles-panel" data-reveal>
+      <div class="pp-title">// EXTERNAL PROFILES</div>
+      <div class="pp-grid">
+
+        <a href="https://leetcode.com/u/0007RAM/" target="_blank" rel="noopener noreferrer" class="pp-card glass">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"
+               alt="LeetCode" width="24" height="24" style="filter:invert(1);flex-shrink:0">
+          <div><strong>LeetCode</strong><span>0007RAM</span></div>
+          <span class="pp-arr" aria-hidden="true">↗</span>
         </a>
-        <a href="https://www.linkedin.com/in/sai-ram-k-847b61375/" target="_blank" class="profile-chip glass-card">
-          <svg viewBox="0 0 24 24" fill="#0A66C2" width="28"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          <div>
-            <strong>LinkedIn</strong>
-            <span>Sai Ram K.</span>
-          </div>
-          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+
+        <a href="https://www.linkedin.com/in/sai-ram-k-847b61375/" target="_blank" rel="noopener noreferrer" class="pp-card glass">
+          <svg viewBox="0 0 24 24" fill="#0A66C2" width="24" aria-hidden="true" style="flex-shrink:0">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          <div><strong>LinkedIn</strong><span>Sai Ram K.</span></div>
+          <span class="pp-arr" aria-hidden="true">↗</span>
         </a>
-        <a href="https://github.com/marias2005" target="_blank" class="profile-chip glass-card">
-          <svg viewBox="0 0 24 24" fill="white" width="28"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-          <div>
-            <strong>GitHub</strong>
-            <span>marias2005</span>
-          </div>
-          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+
+        <a href="https://github.com/0007RAM" target="_blank" rel="noopener noreferrer" class="pp-card glass">
+          <svg viewBox="0 0 24 24" fill="white" width="24" aria-hidden="true" style="flex-shrink:0">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+          <div><strong>GitHub</strong><span>0007RAM</span></div>
+          <span class="pp-arr" aria-hidden="true">↗</span>
         </a>
-        <a href="https://www.instagram.com/mr_posessive_2" target="_blank" class="profile-chip glass-card">
-          <svg viewBox="0 0 24 24" fill="url(#ig-grad)" width="28">
+
+        <a href="https://www.instagram.com/mr_posessive_2" target="_blank" rel="noopener noreferrer" class="pp-card glass">
+          <svg viewBox="0 0 24 24" width="24" aria-hidden="true" style="flex-shrink:0">
             <defs>
-              <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#f09433"/>
-                <stop offset="50%" style="stop-color:#e6683c"/>
-                <stop offset="100%" style="stop-color:#dc2743"/>
+              <linearGradient id="ig-stats" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f09433"/>
+                <stop offset="50%" stop-color="#e6683c"/>
+                <stop offset="100%" stop-color="#dc2743"/>
               </linearGradient>
             </defs>
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            <path fill="url(#ig-stats)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
           </svg>
-          <div>
-            <strong>Instagram</strong>
-            <span>mr_posessive_2</span>
-          </div>
-          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          <div><strong>Instagram</strong><span>mr_posessive_2</span></div>
+          <span class="pp-arr" aria-hidden="true">↗</span>
         </a>
+
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTACT SECTION -->
-  <section id="contact">
-    <div class="section-container">
-      <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">// 05. CONTACT</span>
-        <h2 class="section-title">Let's <em>Build Together</em></h2>
-      </div>
+<!-- ════════════════════════════════════
+     CONTACT
+════════════════════════════════════ -->
+<section id="contact" class="reveal-section" aria-label="Contact">
+  <div class="sec-wrap">
+    <span class="sec-tag">// 05 · CONNECT</span>
+    <h2 class="sec-title">ESTABLISH<br><em>CONNECTION</em></h2>
 
-      <div class="contact-layout">
-        <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
-          <div class="glass-card contact-card">
-            <div class="contact-status">
-              <span class="status-dot"></span>
-              <span>Available for new projects</span>
-            </div>
-            <p>Have an interesting project in mind? Want to collaborate or just say hi? My inbox is always open.</p>
-            <div class="respond-info">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-              <span>Usually responds within 24 hours</span>
-            </div>
+    <div class="contact-layout">
+
+      <!-- Left: meta info + terminal -->
+      <div class="contact-meta" data-reveal>
+
+        <div class="cm-card glass">
+          <div class="cm-status">
+            <span class="status-pulse"></span>
+            <span>AVAILABLE FOR NEW MISSIONS</span>
+          </div>
+          <p>Have an interesting project, startup idea, or opportunity?
+             My channel is always open. Let's build something remarkable.</p>
+          <div class="cm-info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)"
+                 stroke-width="2" width="16" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12,6 12,12 16,14"/>
+            </svg>
+            <span>Response time: &lt; 24 hours</span>
           </div>
         </div>
 
-        <form class="contact-form-new glass-card" id="contactForm" data-aos="fade-left" data-aos-delay="100">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" id="from_name" name="from_name" placeholder="Your name" required>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" id="from_email" name="from_email" placeholder="your@email.com" required>
-            </div>
+        <!-- Terminal widget -->
+        <div class="terminal-window glass" data-reveal>
+          <div class="tw-header">
+            <div class="tw-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="tw-title">terminal.sh</span>
           </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          <div class="tw-body">
+            <div class="tw-line"><span class="tw-prompt">ram@system:~$</span> <span class="tw-cmd">whoami</span></div>
+            <div class="tw-line tw-out">Full-Stack Engineer</div>
+            <div class="tw-line"><span class="tw-prompt">ram@system:~$</span> <span class="tw-cmd">status --check</span></div>
+            <div class="tw-line tw-out tw-green">Available for projects ✓</div>
+            <div class="tw-line"><span class="tw-prompt">ram@system:~$</span> <span class="tw-cmd">uptime</span></div>
+            <div class="tw-line tw-out">2 years, 100+ commits, ∞ ideas</div>
+            <div class="tw-line"><span class="tw-prompt">ram@system:~$</span> <span class="tw-cursor-blink" aria-hidden="true">█</span></div>
           </div>
-          <button type="submit" class="btn-primary send-btn" id="sendBtn">
-            <span id="btn-text">Send Message</span>
-            <svg id="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            <div class="btn-loader" id="btnLoader"></div>
-          </button>
-          <div class="form-message" id="formMessage"></div>
-        </form>
-      </div>
-    </div>
-  </section>
+        </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <span class="logo-bracket">[</span>RAM<span class="logo-bracket">]</span>
       </div>
-      <p>Designed & Built by <strong>Ram</strong> · 2025</p>
-      <p class="footer-copy">© 2025 @VRL · All rights reserved.</p>
-    </div>
-  </footer>
 
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script src="script.js"></script>
+      <!-- Right: contact form -->
+      <form class="contact-form glass" id="contactForm" data-reveal novalidate>
+        <span class="cf-header">SEND_MESSAGE.EXE</span>
+
+        <div class="cf-row">
+          <div class="cf-group">
+            <label for="from_name">NAME</label>
+            <input type="text" id="from_name" name="from_name"
+                   placeholder="Your name" required autocomplete="name">
+          </div>
+          <div class="cf-group">
+            <label for="from_email">EMAIL</label>
+            <input type="email" id="from_email" name="from_email"
+                   placeholder="your@email.com" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="cf-group">
+          <label for="message">MESSAGE</label>
+          <textarea id="message" name="message" rows="5"
+                    placeholder="Describe your mission..." required></textarea>
+        </div>
+
+        <button type="submit" class="cf-submit mag-btn" id="cf-btn">
+          <span id="cf-btn-text">TRANSMIT MESSAGE</span>
+          <div class="cf-loader" id="cf-loader" aria-hidden="true"></div>
+          <div class="cf-glare" aria-hidden="true"></div>
+        </button>
+
+        <div class="cf-msg" id="cf-msg" role="status" aria-live="polite"></div>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer id="footer" role="contentinfo">
+  <canvas id="foot-canvas" aria-hidden="true"></canvas>
+  <div class="foot-inner">
+    <div class="foot-logo">[RAM]</div>
+    <p class="foot-copy">Engineered by <strong>Ram</strong> · 2025 · All systems operational</p>
+    <p class="foot-legal">© 2025 @VRL · All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     AI ASSISTANT — RAM.AI
+════════════════════════════════════ -->
+<div id="ai-panel" class="ai-panel glass" role="dialog" aria-label="RAM.AI Assistant" aria-hidden="true">
+  <div class="ai-header">
+    <div class="ai-avatar" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="32">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="var(--cyan)" stroke-width="1.5"/>
+        <circle cx="20" cy="20" r="6"  fill="var(--cyan)" opacity="0.3"/>
+        <circle cx="20" cy="20" r="2"  fill="var(--cyan)"/>
+      </svg>
+    </div>
+    <div>
+      <div class="ai-name">RAM'S.AI</div>
+      <div class="ai-sub">Portfolio Intelligence</div>
+    </div>
+    <button class="ai-close" id="ai-close" aria-label="Close AI panel">✕</button>
+  </div>
+
+  <div class="ai-messages" id="ai-messages" role="log" aria-live="polite">
+    <div class="ai-msg ai-msg-bot">
+      <span>Hi! 👋 I'm RAM.AI. Ask me about his skills, projects, experience, or how to work with him.</span>
+    </div>
+  </div>
+
+  <div class="ai-input-row">
+    <input type="text" id="ai-input"
+           placeholder="Ask about skills, projects..."
+           autocomplete="off"
+           aria-label="Ask RAM.AI a question">
+    <button id="ai-send" class="ai-send-btn" aria-label="Send message">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" width="17" aria-hidden="true">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<button id="ai-toggle" class="ai-toggle-btn" aria-label="Open RAM.AI assistant">
+  <svg viewBox="0 0 40 40" width="24" aria-hidden="true">
+    <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <circle cx="20" cy="20" r="6"  fill="currentColor" opacity="0.4"/>
+    <circle cx="20" cy="20" r="2"  fill="currentColor"/>
+  </svg>
+  <div class="ai-toggle-pulse" aria-hidden="true"></div>
+</button>
+
+<!-- ════ SCRIPTS ════ -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
